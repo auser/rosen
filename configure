@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# $Id: configure,v 1.5 2007/11/22 14:55:18 corrado_santoro Exp $
+#
+
+ERLBIN=`whereis erl | sed 's|.*:||' | awk '{print $1}'`
+ERLDIR=`dirname $ERLBIN`
+ERLBASE=`dirname \`readlink $ERLBIN\``/../
+EDSLDIR=""
+ROSECWD=`pwd`
+
+
+fix_files(){
+	echo "ESDL dir is: "$1
+	cd $ROSECWD/src
+	echo "EDSLDIR="$1 > esdl.incl
+
+}
+
+
+
+#echo $ERLBASE
+cd $ERLDIR
+cd $ERLBASE
+
+for i in `ls lib`; do
+LIBNAME=`echo $i | tr -c -d [:alpha:]`
+if [ $LIBNAME = "esdl" ]; then
+	EDSLDIR=$i
+fi
+
+done
+if [ -z $EDSLDIR ]; then
+	echo "Install ESDL first!!!!"
+	cd $ROSECWD
+else
+	EDSLDIR=`pwd`/lib/$EDSLDIR/
+#echo $EDSLDIR
+	fix_files $EDSLDIR
+	cd $ROSEDIR
+fi
+
+

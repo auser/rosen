@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Module geometry</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module geometry</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>A module providing basic functions for vector and coordinate  
+operations.
+
+
+<h2><a name="description">Description</a></h2><p>A module providing basic functions for vector and coordinate  
+operations.</p>
+ 
+  The include file "geometry.hrl" provides the definition of the records
+  <code>#vector{}</code> and <code>#speric{}</code>,
+  to represent coordinates and vectors (see below)
+  and some macros, used to define colors, vectors and real
+  measurement units. The following macros
+  are available:
+  <ul>
+  <li><code>?VECTOR(X,Y,Z)</code>, defines a vector.</li>
+  <li><code>?RGB(R,G,B)</code>, defines an RGB color; costants are real
+      numbers in the range [0,1].</li>
+  <li><code>?CM(X)</code>, defines a value in centimeters.</li>
+  <li><code>?MM(X)</code>, defines a value in millimeters.</li>
+  <li><code>?M(X)</code>, defines a value in meters.</li>
+  <li><code>?CM_S(X)</code>, defines a linear speed in cm/s.</li>
+  <li><code>?DEG_S(X)</code>, defines an angular speed in degree/s.</li>
+  </ul>
+ 
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-spheric">spheric()</a></h3>
+<p><tt>spheric() = #spheric{}</tt></p>
+<p>A record representing spheric coordinates. It has the fields:
+  <ul>
+  <li><code>rho</code>, the distance of the point from the origin;</li>
+  <li><code>theta</code>, the angle formed with the <i>x</i> axis
+      along <i>xy</i> plane;</li>
+  <li><code>phi</code>, the angle formed with the <i>z</i> axis.</li>
+  </ul>
+ 
+ </p>
+
+<h3 class="typedecl"><a name="type-vector">vector()</a></h3>
+<p><tt>vector() = #vector{}</tt></p>
+<p>A record representing a vector (or a point) in 3D space and
+  has the fields <code>x</code>, <code>y</code> and <code>z</code>.
+ </p>
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#add-2">add/2</a></td><td>Adds two vectors.</td></tr>
+<tr><td valign="top"><a href="#angle-2">angle/2</a></td><td>Determines the angle (in degrees) formed by two vectors.</td></tr>
+<tr><td valign="top"><a href="#cartesian2spheric-1">cartesian2spheric/1</a></td><td>Converts coordinates from cartesian to spheric.</td></tr>
+<tr><td valign="top"><a href="#cross-2">cross/2</a></td><td>Vector cross product.</td></tr>
+<tr><td valign="top"><a href="#distance-2">distance/2</a></td><td>Compute the distance between the targets of by two vectors.</td></tr>
+<tr><td valign="top"><a href="#dot-2">dot/2</a></td><td>Vector dot product.</td></tr>
+<tr><td valign="top"><a href="#dot_v-2">dot_v/2</a></td><td>Multiplies a scalar with a vector.</td></tr>
+<tr><td valign="top"><a href="#line_for_one_point-3">line_for_one_point/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#line_for_one_point-4">line_for_one_point/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#line_intersect-2">line_intersect/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#norm-1">norm/1</a></td><td>Computes the length of a vector.</td></tr>
+<tr><td valign="top"><a href="#normalize_angle-1">normalize_angle/1</a></td><td>Normalizes an angle (in degrees) in the range -180, 180.</td></tr>
+<tr><td valign="top"><a href="#point_in_segment-3">point_in_segment/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#spheric2cartesian-1">spheric2cartesian/1</a></td><td>Converts coordinates from spheric to cartesian.</td></tr>
+<tr><td valign="top"><a href="#to_degrees-1">to_degrees/1</a></td><td>Coverts an angle from radiants to degree.</td></tr>
+<tr><td valign="top"><a href="#to_radiants-1">to_radiants/1</a></td><td>Coverts an angle from degree to radiants.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="add-2">add/2</a></h3>
+<div class="spec">
+<p><tt>add(V1::<a href="#type-vector">vector()</a>, V2::<a href="#type-vector">vector()</a>) -&gt; <a href="#type-vector">vector()</a></tt></p>
+</div><p>Adds two vectors.
+ </p>
+
+<h3 class="function"><a name="angle-2">angle/2</a></h3>
+<div class="spec">
+<p><tt>angle(V1::<a href="#type-vector">vector()</a>, V2::<a href="#type-vector">vector()</a>) -&gt; number()</tt></p>
+</div><p>Determines the angle (in degrees) formed by two vectors.
+ </p>
+
+<h3 class="function"><a name="cartesian2spheric-1">cartesian2spheric/1</a></h3>
+<div class="spec">
+<p><tt>cartesian2spheric(V::<a href="#type-vector">vector()</a>) -&gt; <a href="#type-spheric">spheric()</a></tt></p>
+</div><p>Converts coordinates from cartesian to spheric.
+ </p>
+
+<h3 class="function"><a name="cross-2">cross/2</a></h3>
+<div class="spec">
+<p><tt>cross(V1::<a href="#type-vector">vector()</a>, V2::<a href="#type-vector">vector()</a>) -&gt; number()</tt></p>
+</div><p>Vector cross product.
+ </p>
+
+<h3 class="function"><a name="distance-2">distance/2</a></h3>
+<div class="spec">
+<p><tt>distance(V1::<a href="#type-vector">vector()</a>, V2::<a href="#type-vector">vector()</a>) -&gt; number()</tt></p>
+</div><p>Compute the distance between the targets of by two vectors.
+ </p>
+
+<h3 class="function"><a name="dot-2">dot/2</a></h3>
+<div class="spec">
+<p><tt>dot(V1::<a href="#type-vector">vector()</a>, V2::<a href="#type-vector">vector()</a>) -&gt; number()</tt></p>
+</div><p>Vector dot product.
+ </p>
+
+<h3 class="function"><a name="dot_v-2">dot_v/2</a></h3>
+<div class="spec">
+<p><tt>dot_v(A::number(), V::<a href="#type-vector">vector()</a>) -&gt; <a href="#type-vector">vector()</a></tt></p>
+</div><p>Multiplies a scalar with a vector.
+ </p>
+
+<h3 class="function"><a name="line_for_one_point-3">line_for_one_point/3</a></h3>
+<div class="spec">
+<p><tt>line_for_one_point() -&gt; term()</tt></p>
+</div>
+
+<h3 class="function"><a name="line_for_one_point-4">line_for_one_point/4</a></h3>
+<div class="spec">
+<p><tt>line_for_one_point() -&gt; term()</tt></p>
+</div>
+
+<h3 class="function"><a name="line_intersect-2">line_intersect/2</a></h3>
+<div class="spec">
+<p><tt>line_intersect() -&gt; term()</tt></p>
+</div>
+
+<h3 class="function"><a name="norm-1">norm/1</a></h3>
+<div class="spec">
+<p><tt>norm(V::<a href="#type-vector">vector()</a>) -&gt; number()</tt></p>
+</div><p>Computes the length of a vector.
+ </p>
+
+<h3 class="function"><a name="normalize_angle-1">normalize_angle/1</a></h3>
+<div class="spec">
+<p><tt>normalize_angle(Angle::number()) -&gt; number()</tt></p>
+</div><p>Normalizes an angle (in degrees) in the range -180, 180.</p>
+
+<h3 class="function"><a name="point_in_segment-3">point_in_segment/3</a></h3>
+<div class="spec">
+<p><tt>point_in_segment() -&gt; term()</tt></p>
+</div>
+
+<h3 class="function"><a name="spheric2cartesian-1">spheric2cartesian/1</a></h3>
+<div class="spec">
+<p><tt>spheric2cartesian(S::<a href="#type-spheric">spheric()</a>) -&gt; <a href="#type-vector">vector()</a></tt></p>
+</div><p>Converts coordinates from spheric to cartesian.
+ </p>
+
+<h3 class="function"><a name="to_degrees-1">to_degrees/1</a></h3>
+<div class="spec">
+<p><tt>to_degrees(Angle::number()) -&gt; number()</tt></p>
+</div><p>Coverts an angle from radiants to degree.</p>
+
+<h3 class="function"><a name="to_radiants-1">to_radiants/1</a></h3>
+<div class="spec">
+<p><tt>to_radiants(Angle::number()) -&gt; number()</tt></p>
+</div><p>Coverts an angle from degree to radiants.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Mar 27 2008, 16:55:32.</i></p>
+</body>
+</html>

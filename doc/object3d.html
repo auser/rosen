@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Module object3d</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module object3d</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>Main module for handling 3D objects.
+
+<p><b>Behaviours:</b> <a href="gen_server.html"><tt>gen_server</tt></a>.</p>
+
+<h2><a name="description">Description</a></h2><p>Main module for handling 3D objects.</p>
+ 
+  <p>This module provides functions for creating a 3D object and
+  manipulating it in order to change its attributes like position,
+  orientation, color, etc.</p>
+ 
+  <p>This is also a <b>behaviour</b>, since it can be used as the
+  general part for implementing new ad-hoc 3D objects to be manipulated
+  by ROSEN.</p>
+ 
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-object3d">object3d()</a></h3>
+<p><tt>object3d() = #object3d{}</tt></p>
+<p>A record with all parameters related to a 3D object.
+ </p>
+
+<h3 class="typedecl"><a name="type-vector">vector()</a></h3>
+<p><tt>vector() = #vector{}</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#activities-1">activities/1</a></td><td>Gets the list of activities associated to a 3D object.</td></tr>
+<tr><td valign="top"><a href="#add_activity-3">add_activity/3</a></td><td>Associates an activity to a 3D object.</td></tr>
+<tr><td valign="top"><a href="#add_activity-4">add_activity/4</a></td><td>Associates an activity to a 3D object.</td></tr>
+<tr><td valign="top"><a href="#add_to_compound-2">add_to_compound/2</a></td><td>Adds a new component to a compound object.</td></tr>
+<tr><td valign="top"><a href="#axis-1">axis/1</a></td><td>Gets the axis of an object.</td></tr>
+<tr><td valign="top"><a href="#axis-2">axis/2</a></td><td>Changes the axis of an object.</td></tr>
+<tr><td valign="top"><a href="#draw-1">draw/1</a></td><td>Draws the object.</td></tr>
+<tr><td valign="top"><a href="#new-1">new/1</a></td><td>Creates a new 3D object as specified in the parameter.</td></tr>
+<tr><td valign="top"><a href="#obj-1">obj/1</a></td><td>Gets the object info.</td></tr>
+<tr><td valign="top"><a href="#position-1">position/1</a></td><td>Gets the <i>(x,y,z)</i> position of an object.</td></tr>
+<tr><td valign="top"><a href="#position-2">position/2</a></td><td>Sets the <i>(x,y,z)</i> position of an object.</td></tr>
+<tr><td valign="top"><a href="#start_point-1">start_point/1</a></td><td>Gets the starting point of a line.</td></tr>
+<tr><td valign="top"><a href="#start_point-2">start_point/2</a></td><td>Gets the starting point of a line.</td></tr>
+<tr><td valign="top"><a href="#stop-1">stop/1</a></td><td>Destroys the object.</td></tr>
+<tr><td valign="top"><a href="#up-1">up/1</a></td><td>Gets the up direction of an object.</td></tr>
+<tr><td valign="top"><a href="#up-2">up/2</a></td><td>Changes the up direction of an object.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="activities-1">activities/1</a></h3>
+<div class="spec">
+<p><tt>activities(ObjPid::pid()) -&gt; [pid()]</tt></p>
+</div><p>Gets the list of activities associated to a 3D object.
+ </p>
+
+<h3 class="function"><a name="add_activity-3">add_activity/3</a></h3>
+<div class="spec">
+<p><tt>add_activity(ObjPid::pid(), Module::atom(), InitialParams::<a href="#type-property_list">property_list()</a>) -&gt; {ok, ActivityPid}</tt></p>
+</div><p>Associates an activity to a 3D object.
+  <br>
+  The <code>ObjPid</code> represents the object to which
+  the activity has to be associated;
+  <code>Module</code> is the name of the module implementing the
+  activity (using <code>gen_activity</code> behaviour);
+  <code>InitialParams</code>
+  is a property list which provides the initial values of the
+  activity parameters.
+  <br>
+  It returns the pid of the process executing this activity.
+ </p>
+
+<h3 class="function"><a name="add_activity-4">add_activity/4</a></h3>
+<div class="spec">
+<p><tt>add_activity(ObjPid::pid(), Module::atom(), Name::term(), InitialParams::<a href="#type-property_list">property_list()</a>) -&gt; {ok, ActivityPid}</tt></p>
+</div><p>Associates an activity to a 3D object.
+  <br>
+  Same as <code>add_activity/3</code>, but registering with
+  <code>Name</code> the process executing this activity.</p>
+
+<h3 class="function"><a name="add_to_compound-2">add_to_compound/2</a></h3>
+<div class="spec">
+<p><tt>add_to_compound(ObjPid::pid(), Obj::<a href="#type-object3d">object3d()</a>) -&gt; ok</tt></p>
+</div><p>Adds a new component to a compound object.
+ </p>
+
+<h3 class="function"><a name="axis-1">axis/1</a></h3>
+<div class="spec">
+<p><tt>axis(ObjPid::pid()) -&gt; <a href="#type-vector">vector()</a></tt></p>
+</div><p>Gets the axis of an object.
+ </p>
+
+<h3 class="function"><a name="axis-2">axis/2</a></h3>
+<div class="spec">
+<p><tt>axis(ObjPid::pid(), NewAxis::<a href="#type-vector">vector()</a>) -&gt; ok</tt></p>
+</div><p>Changes the axis of an object.
+ </p>
+
+<h3 class="function"><a name="draw-1">draw/1</a></h3>
+<div class="spec">
+<p><tt>draw(ObjPid::pid()) -&gt; ok</tt></p>
+</div><p>Draws the object.
+  <br>
+  This function is automatically called by the ROSEN engine
+  to draw the object. In turn, it calls the draw/1 callback of the
+  code implementing the drawing routines for the specific object.
+ </p>
+
+<h3 class="function"><a name="new-1">new/1</a></h3>
+<div class="spec">
+<p><tt>new(Obj::<a href="#type-object3d">object3d()</a>) -&gt; {ok, Pid}</tt></p>
+</div><p>Creates a new 3D object as specified in the parameter.
+  <br>
+  The object is handled has a new process linked with the calling
+  process. The function result is thus the pid of the spawned process.
+  If a name is specified in the #object3d record, the process is bound
+  to that name, so that, in all the functions of this module, the object
+  can be referred with either the pid or its registered name.
+ </p>
+
+<h3 class="function"><a name="obj-1">obj/1</a></h3>
+<div class="spec">
+<p><tt>obj(ObjPid::pid()) -&gt; <a href="#type-object3d">object3d()</a></tt></p>
+</div><p>Gets the object info.
+  <br>
+  Returns an #object3d record with the whole description
+  of the object represented by the given pid or name.
+ </p>
+
+<h3 class="function"><a name="position-1">position/1</a></h3>
+<div class="spec">
+<p><tt>position(ObjPid::pid()) -&gt; <a href="#type-vector">vector()</a></tt></p>
+</div><p>Gets the <i>(x,y,z)</i> position of an object.
+ </p>
+
+<h3 class="function"><a name="position-2">position/2</a></h3>
+<div class="spec">
+<p><tt>position(ObjPid::pid(), Position::<a href="#type-vector">vector()</a>) -&gt; ok</tt></p>
+</div><p>Sets the <i>(x,y,z)</i> position of an object.
+ </p>
+
+<h3 class="function"><a name="start_point-1">start_point/1</a></h3>
+<div class="spec">
+<p><tt>start_point(ObjPid::pid()) -&gt; <a href="#type-vector">vector()</a></tt></p>
+</div><p>Gets the starting point of a line.
+ </p>
+
+<h3 class="function"><a name="start_point-2">start_point/2</a></h3>
+<div class="spec">
+<p><tt>start_point(ObjPid::pid(), NewPt::<a href="#type-vector">vector()</a>) -&gt; ok</tt></p>
+</div><p>Gets the starting point of a line.
+ </p>
+
+<h3 class="function"><a name="stop-1">stop/1</a></h3>
+<div class="spec">
+<p><tt>stop(Pid::pid()) -&gt; ok</tt></p>
+</div><p>Destroys the object.
+ </p>
+
+<h3 class="function"><a name="up-1">up/1</a></h3>
+<div class="spec">
+<p><tt>up(ObjPid::pid()) -&gt; <a href="#type-vector">vector()</a></tt></p>
+</div><p>Gets the up direction of an object.
+ </p>
+
+<h3 class="function"><a name="up-2">up/2</a></h3>
+<div class="spec">
+<p><tt>up(ObjPid::pid(), NewUp::<a href="#type-vector">vector()</a>) -&gt; ok</tt></p>
+</div><p>Changes the up direction of an object.
+ </p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Mar 27 2008, 16:55:32.</i></p>
+</body>
+</html>

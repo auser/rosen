@@ -1,0 +1,23 @@
+@author Corrado Santoro <csanto@diit.unict.it>
+@author Vincenzo Nicosia <vnicosia@diit.unict.it>
+@copyright 2007 Corrado Santoro, Vincenzo Nicosia
+@version 0.3.1
+@title ROSEN - The RObotic Simulation Erlang eNgine
+@doc ROSEN is an erlang library to simulate 3D environments.
+It uses <a href="http://esdl.sourceforge.net" target="_new">ESDL</a>
+(and thus OpenGL) as the 3D
+visualisation engine and provides some modules and functions to:
+<ul>
+<li>Create and manipulate simple 3D objects, as cubes, boxes, spheres,
+etc.</li>
+<li>Create and manipulate complex "compound objects", which are rigid objects
+composed of other objects.</li>
+<li>Apply user-defined motion (i.e. translations and rotations over time)
+to such objects.</li>
+<li>Control the camera orientation using both keys and function calls.</li>
+</ul>
+
+
+Check the <code>examples</code> directory for some examples of using the
+ROSEN library.
+

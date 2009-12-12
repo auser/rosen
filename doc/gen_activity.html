@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Module gen_activity</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module gen_activity</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>This behaviour provides an abstraction for object activities.
+
+<p><b>Behaviours:</b> <a href="gen_server.html"><tt>gen_server</tt></a>.</p>
+
+<h2><a name="description">Description</a></h2>This behaviour provides an abstraction for object activities.
+       A gen_activity allows an object "to do" something during the
+       simulation, and alla activities can be performed in parallel.
+       For example, if the robot has an helic which is a compound
+       Object3d(), the right way to make the helic rotating is adding
+       an activity "rotate_helic" which uses the gen_activity behaviour
+       and takes care of helic rotation at each step.
+       Each activity is passed the current state of the object it is
+       applied to, so that it is possible to modify objects properties
+       (position, colors, etc...) as a result of the activity. <br>
+       The callback module should provide those functions:<br>
+       <ul>
+       <li>init/2</li>
+       <li>step/5</li>
+       <li>get_property/3</li>
+       <li>set_property/4</li>
+       </ul><p>
+       which are used, respectively, to perform a step of the activity and
+       to get/set activity properties. <br>
+       <br>
+       Some other modules of ROSEN, for example <i>kinematics</i>,
+       <i>simple_path</i> and <i>diff_drive</i> are       
+implemented as activities, since the movement of an object       
+is, actually, one of the main activities of an object in a 3d sim.</p>
+ 
+ 
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#get_property-2">get_property/2</a></td><td>Get the property PropName of the activity at pid Pid.</td></tr>
+<tr><td valign="top"><a href="#module_state-1">module_state/1</a></td><td>Returns the state of the specific module associated to
+       this gen_activity.</td></tr>
+<tr><td valign="top"><a href="#set_property-3">set_property/3</a></td><td>Set the property PropName of the activity at pid Pid assigning it to
+       value PropValue.</td></tr>
+<tr><td valign="top"><a href="#start_link-4">start_link/4</a></td><td>create an activity for an object.</td></tr>
+<tr><td valign="top"><a href="#start_link-5">start_link/5</a></td><td>create an activity for an object, registering it with local name Name.</td></tr>
+<tr><td valign="top"><a href="#step-2">step/2</a></td><td>Perform a step of an activity.</td></tr>
+<tr><td valign="top"><a href="#stop-1">stop/1</a></td><td>Immediately stop the activity with pid Pid, calling the
+       <code>terminate/2</code> callback function, which
+       should return ok.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="get_property-2">get_property/2</a></h3>
+<div class="spec">
+<p><tt>get_property(Pid, PropName) -&gt; Result</tt>
+<ul class="definitions"><li><tt>Pid = pid()</tt></li>
+<li><tt>PropName = term()</tt></li>
+<li><tt>Result = {value, {PropName, PropValue}} | {error, noprop} | CustomRes</tt></li>
+<li><tt>PropValue = term()</tt></li>
+<li><tt>CustomRes = term()</tt></li>
+</ul></p>
+</div><p>Get the property PropName of the activity at pid Pid. The result
+       should be {error, noprop} if the property does ot exist, and should
+       be {value, {PropName, PropVal}} if the property exists. Also a
+       custom CustomRes term can be returned.
+ </p>
+
+<h3 class="function"><a name="module_state-1">module_state/1</a></h3>
+<div class="spec">
+<p><tt>module_state(Pid) -&gt; Result</tt>
+<ul class="definitions"><li><tt>Pid = pid()</tt></li>
+<li><tt>Result = term()</tt></li>
+</ul></p>
+</div><p>Returns the state of the specific module associated to
+       this gen_activity.
+ </p>
+
+<h3 class="function"><a name="set_property-3">set_property/3</a></h3>
+<div class="spec">
+<p><tt>set_property(Pid, PropName, PropertyValue) -&gt; Result</tt>
+<ul class="definitions"><li><tt>Pid = pid()</tt></li>
+<li><tt>PropName = term()</tt></li>
+<li><tt>PropValue = term()</tt></li>
+<li><tt>Result = ok | {error, noprop}</tt></li>
+<li><tt>PropVal = term()</tt></li>
+</ul></p>
+</div><p>Set the property PropName of the activity at pid Pid assigning it to
+       value PropValue. If the property esists, it is set to the new value
+       and the result is {ok}. Otherwise, the callback function should return
+       {error, noprop}
+ </p>
+
+<h3 class="function"><a name="start_link-4">start_link/4</a></h3>
+<div class="spec">
+<p><tt>start_link(Module, Params, ObjectPid, Object) -&gt; Result</tt>
+<ul class="definitions"><li><tt>Module = atom()</tt></li>
+<li><tt>Params = [term()]</tt></li>
+<li><tt>ObjectPid = pid()</tt></li>
+<li><tt>Object = <a href="#type-object3d">object3d()</a></tt></li>
+<li><tt>Result = {ok, Pid} | {error, Reason} | undefined</tt></li>
+</ul></p>
+</div><p>create an activity for an object.
+       Module is the name of the module where callbacks are implemented.
+       Params is the list of params to be passed to the <pre>Module:init</pre>
+       function <code>ObjectPid</code> is the pid of the Object3d to which
+       this activity applies, while <code>Object</code> must be the complete
+       description of the object3d.<br>
+       This function is not called directly, you may use
+       <pre>object3d:add_activity</pre><p> to add an activity to a given       
+object.</p>
+ 
+ </p>
+
+<h3 class="function"><a name="start_link-5">start_link/5</a></h3>
+<div class="spec">
+<p><tt>start_link(Name, Module, Params, ObjectPid, Object) -&gt; Result</tt>
+<ul class="definitions"><li><tt>Name = atom()</tt></li>
+<li><tt>Module = atom()</tt></li>
+<li><tt>Params = [term()]</tt></li>
+<li><tt>ObjectPid = pid()</tt></li>
+<li><tt>Object = <a href="#type-object3d">object3d()</a></tt></li>
+<li><tt>Result = {ok, Pid} | {error, Reason} | undefined</tt></li>
+</ul></p>
+</div><p>create an activity for an object, registering it with local name Name.
+       Name = the name of the activity
+       Module is the name of the module where callbacks are implemented.
+       Params is the list of params to be passed to the <pre>Module:init</pre>
+       function <code>ObjectPid</code> is the pid of the Object3d to which
+       this activity applies, while <code>Object</code> must be the complete
+       description of the object3d.<br>
+       This function is not called directly, you may use
+       <pre>object3d:add_activity</pre> to add an activity to a given
+       object.
+ </p>
+
+<h3 class="function"><a name="step-2">step/2</a></h3>
+<div class="spec">
+<p><tt>step(Pid, ObjectState) -&gt; Reply</tt>
+<ul class="definitions"><li><tt>Pid = pid()</tt></li>
+<li><tt>ObjectState = <a href="#type-object3d">object3d()</a></tt></li>
+<li><tt>Reply = term()</tt></li>
+</ul></p>
+</div><p><p>Perform a step of an activity. The step acts on the ObjectState of       
+the object whose pid is Pid.       
+Reply is a term returned by the activity. Note that activities are       
+performed on a step-by-step base: whenever an object3d() is updated,       
+all its activities perform a step.</p>
+ 
+ </p>
+
+<h3 class="function"><a name="stop-1">stop/1</a></h3>
+<div class="spec">
+<p><tt>stop(Pid) -&gt; ok</tt>
+<ul class="definitions"><li><tt>Pid = pid()</tt></li>
+</ul></p>
+</div><p>Immediately stop the activity with pid Pid, calling the
+       <code>terminate/2</code> callback function, which
+       should return ok.
+ </p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Mar 27 2008, 16:55:32.</i></p>
+</body>
+</html>
